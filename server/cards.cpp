@@ -12,6 +12,7 @@ void swap(card *a, card *b)
 
 pocker_card::pocker_card()
 {
+    point = 0;
     for (int i = 0; i < 4; i++)
     {
         for (int j = 1; j <= 13; j++)
@@ -40,11 +41,16 @@ void pocker_card::show()
 }
 void pocker_card::deal(player *temp)
 {
-    for (int i = 0; i < cards_of_hand; i++)
-    {
-        (*temp).setCards(deck.back());
-        deck.pop_back();
-    }
+    (*temp).setCards(deck.back());
+    deck.pop_back();
+}
+void pocker_card::update(int num)
+{
+    point += num;
+}
+int pocker_card::get_point()
+{
+    return point;
 }
 
 void player::setCards(card temp)
@@ -58,3 +64,7 @@ void player::show()
         printf("%c,%d\n", hand[i].suit, hand[i].point);
     }
 };
+card player::get_hand(int x)
+{
+    return hand[x];
+}

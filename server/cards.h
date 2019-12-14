@@ -1,6 +1,6 @@
-#include<vector>
-#include<stdio.h>
-#include<iostream>
+#include <vector>
+#include <stdio.h>
+#include <iostream>
 #include <stdlib.h>
 #include <time.h>
 using namespace std;
@@ -13,24 +13,30 @@ typedef struct cards
 {
     char suit;
     int point;
-}card;
+} card;
 
 class pocker_card
 {
-    private:
-        vector<card>deck;
-    public:
-        pocker_card();
-        void shuffel();
-        void show();
-        void deal(player *);
+private:
+    vector<card> deck;
+    int point;
+
+public:
+    pocker_card();
+    void shuffel();
+    void show();
+    void deal(player *);
+    void update(int);
+    int get_point();
 };
 
 class player
 {
-    private:
-        vector<card>hand;
-    public:
-        void setCards(card);
-        void show();
+private:
+    vector<card> hand;
+
+public:
+    void setCards(card);
+    void show();
+    card get_hand(int );
 };
