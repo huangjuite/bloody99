@@ -8,51 +8,40 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
-    QLabel *lblFirstName = new QLabel("First Name");
-    QLabel *lblLastName = new QLabel("Last Name");
-
-    QLineEdit *txtFirstName = new QLineEdit();
-    QLineEdit *txtLastName = new QLineEdit();
-
-    QPushButton *btnOk = new QPushButton("OK");
-    QPushButton *btnCancel = new QPushButton("Cancel");
-
-    QHBoxLayout *top = new QHBoxLayout;
-    QHBoxLayout *bottom = new QHBoxLayout;
-    QHBoxLayout *btnLayout = new QHBoxLayout;
-    QHBoxLayout *imgeLayout = new QHBoxLayout;
-
-    top->addWidget(lblFirstName);
-    top->addWidget(txtFirstName);
-
-    bottom->addWidget(lblLastName);
-    bottom->addWidget(txtLastName);
-
-    btnLayout->addStretch();
-    btnLayout->addWidget(btnOk);
-    btnLayout->addWidget(btnCancel);
+    char cards[]="CDHS";
 
     for (int i=0;i<52;i++) {
-        QLabel *img = new QLabel;
-        img->setPixmap(QPixmap(":/img/imgaes/card/1C.png"));
-        img->show();
-
+        stringstream cardName;
+        cardName << ":/img/images/card/" << i%13+1 << cards[i/13] << ".png";
+        cout << cardName.str()  << endl;
+        QLabel *img = new QLabel(this);
+        QTransform trans;
+        trans.rotate(0);
+        QPixmap pix(cardName.str().c_str());
+        pix = pix.transformed(trans);
+        img->setPixmap(pix);
+        img->setGeometry(10*i,10*i,pix.width(),pix.height());
+        img->setScaledContents(true);
+//        img->show();
+        img->hide();
         image_label.push_back(img);
-        imgeLayout->addWidget(img);
     }
 
+    image_label[30]->show();
 
-    QVBoxLayout *mainLayout = new QVBoxLayout(this);
-    mainLayout->addLayout(top);
-    mainLayout->addLayout(bottom);
-    mainLayout->addLayout(btnLayout);
-    mainLayout->addLayout(imgeLayout);
+    timer = new QTimer(this);
+    connect(timer,SIGNAL(timeout()) ,this, SLOT(timer_slot()));
+    timer->start(1000);
 
-    this->centralWidget()->setLayout(mainLayout);
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+
+void MainWindow::timer_slot()
+{
+    cout << "yap" <<endl;
 }
 

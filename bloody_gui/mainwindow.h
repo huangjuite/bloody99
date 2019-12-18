@@ -5,9 +5,15 @@
 #include <QVector>
 #include <QLabel>
 #include <QBoxLayout>
+#include <QGridLayout>
 #include <QPushButton>
 #include <QLineEdit>
 #include <QPixmap>
+#include <iostream>
+#include <sstream>
+#include <QTransform>
+#include <QTimer>
+using namespace std;
 
 
 QT_BEGIN_NAMESPACE
@@ -22,8 +28,15 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+private slots:
+    void timer_slot();
+
+
 private:
     Ui::MainWindow *ui;
     QVector<QLabel*> image_label;
+    QTimer *timer;
+
+
 };
 #endif // MAINWINDOW_H
