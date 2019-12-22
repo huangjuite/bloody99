@@ -44,9 +44,11 @@ void pocker_card::deal(player *temp)
     (*temp).setCards(deck.back());
     deck.pop_back();
 }
-void pocker_card::update(int num)
+void pocker_card::set_point(int num)
 {
     point += num;
+    if(point<=0)
+        point = 0;
 }
 int pocker_card::get_point()
 {
@@ -67,4 +69,8 @@ void player::show()
 card player::get_hand(int x)
 {
     return hand[x];
+}
+vector<card> player::get_total_hand()
+{
+    return hand;
 }

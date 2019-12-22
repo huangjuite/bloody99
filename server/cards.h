@@ -26,7 +26,7 @@ public:
     void shuffel();
     void show();
     void deal(player *);
-    void update(int);
+    void set_point(int);
     int get_point();
 };
 
@@ -39,4 +39,5 @@ public:
     void setCards(card);
     void show();
     card get_hand(int );
+    vector<card>get_total_hand();
 };
