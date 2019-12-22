@@ -46,7 +46,10 @@ void pocker_card::deal(player *temp)
 }
 void pocker_card::set_point(int num)
 {
-    point += num;
+    if(num == 99)
+        point = 99;
+    else
+        point += num;
     if(point<=0)
         point = 0;
 }
@@ -106,4 +109,13 @@ int player::size_of_hand()
 void player::delCard(int x)
 {
     hand.erase(hand.begin()+x);
+}
+string player::getString()
+{
+    string s;
+    for(int i=0 ; i<hand.size() ; i++)
+    {
+        s = s+(hand[i].suit)+" "+to_string(hand[i].point)+"\n";
+    }
+    return s;
 }

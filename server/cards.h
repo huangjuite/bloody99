@@ -46,4 +46,5 @@ public:
     bool gameover();
     int size_of_hand();
     void delCard(int x);
+    string getString();
 };

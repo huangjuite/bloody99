@@ -1,13 +1,14 @@
 #include <iostream>
 #include <string>
+#include <sstream>
 #include <vector>
 #include <pthread.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include<semaphore.h>
 #include <sys/sem.h>
 #include <sys/wait.h>
 #include <sys/types.h>
-#include<semaphore.h>
 #include "sockop.h"
 #include "cards.h"
 
@@ -44,9 +45,10 @@ void initial()
     }
 }
 
-void rule(card c, int i, int j)
+void rule(card c, int i, int j, bool deal_flag)
 {
     bool flag = true;
+    cout<<"in rule "<<c.point<<endl;
     switch (c.point)
     {
         case 1:
@@ -56,16 +58,18 @@ void rule(card c, int i, int j)
                 cards.set_point(1);
             break;
         case 4:
-            turn_flag = -turn_flag;
+            turn_flag = !turn_flag;
             break;
         case 5:
             turn_count = j;
             break;
         case 7:
             cards.change_one_card(&players[i], &players[j]);
+            deal_flag = false;
             break;
         case 9:
             cards.change_all_card(&players[i], &players[j]);
+            deal_flag = false;
             break;
         case 10:
             if(flag)
@@ -88,6 +92,8 @@ void rule(card c, int i, int j)
             cards.set_point(c.point);
             break;
     }
+    if(deal_flag)
+        cards.deal(&players[turn_count]);
 }
 
 void *player_turn(void *address)
@@ -104,16 +110,10 @@ void *player_turn(void *address)
     {
         if(!g)
             continue;
-        s="";
-        vector<card>myhands = players[mynum].get_total_hand();
-        for(int i=0 ; i<myhands.size() ; i++)
-        {
-            s = s+(myhands[i].suit)+" "+to_string(myhands[i].point)+"\n";
-        }
-        sprintf(snd, "%s", s.c_str());
+        sprintf(snd, "Enter any char for ok\n");
         write(*connfd, snd, strlen(snd));
         read(*connfd, rcv, BUFSIZE);
-        printf("%s\n", rcv);
+        //printf("%s\n", rcv);
         memset(rcv, 0, BUFSIZE);
         break;
     }
@@ -125,18 +125,23 @@ void *player_turn(void *address)
     while(1)
     {
         sem_wait(&mysem[mynum]);
-        cout<<"in "<<mynum<<endl;
-        sprintf(snd, "input data\n");
+        s = players[mynum].getString();
+        sprintf(snd, "%s", s.c_str());
         write(*connfd, snd, strlen(snd));
         memset(rcv, 0, BUFSIZE);
         read(*connfd, rcv, BUFSIZE);
-        printf("in thread %s\n", rcv);
+        //printf("in thread %s\n", rcv);
         sem_post(&game_sem);
     }
 }
 
 void *total_game(void *data)
 {
+    vector<int>commands;
+    string command;
+    card temp_card;
+    int index,target;
+    bool deal_flag;
     while(1)
     {
         if(players.size()>=num_of_player+1)
@@ -145,6 +150,7 @@ void *total_game(void *data)
     initial();
     g = true;
     sem_init(&game_sem, 0, 1);
+    cout<<mysem.size()<<endl;
     //wait for all player is ok;
     while(1)
     {
@@ -154,10 +160,58 @@ void *total_game(void *data)
     cout<<"all player is ok"<<endl;
     turn_flag = true;
     turn_count = 0;
+    sem_init(&game_sem, 0, 0);
     while(1)
     {
-        sem_wait(&game_sem);
         sem_post(&mysem[turn_count]);
+        sem_wait(&game_sem);
+        istringstream iss(rcv);
+        while(iss>>command)
+        {
+            commands.push_back(atoi(command.c_str()));
+        }
+        cout<<"commnads size "<<commands.size()<<endl;
+        if(commands.size()>=2)
+        {
+            int sum=0;
+            target = commands[commands.size()-1];
+            commands.pop_back();
+            for(int i=0 ; i<commands.size() ; i++)
+            {
+                index = commands[i];
+                sum+=players[turn_count].get_hand(index).point;
+            }
+            for(int i=0 ; i<commands.size() ; i++)
+            {
+                for(int j=i ; j<commands.size() ; j++)
+                {
+                    if(commands[i]>commands[j])
+                    {
+                        int temp = commands[i];
+                        commands[i] = commands[j];
+                        commands[j] = commands[i];
+                    }
+                }
+            }
+            temp_card.suit = 'c';
+            temp_card.point = sum;
+            deal_flag = false;
+        }
+        else
+        {
+            index = commands[0];
+            target = turn_count;
+            temp_card = players[turn_count].get_hand(index);
+            deal_flag = true;
+        }
+        for(int i=0 ; i<commands.size() ; i++)
+        {
+            index = commands[i]-i;
+            players[turn_count].delCard(index);
+        }
+        rule(temp_card, turn_count, target, deal_flag);
+        commands.clear();
+
         if(turn_flag == true)
         {
             turn_count++;
@@ -167,9 +221,12 @@ void *total_game(void *data)
         else
         {
             turn_count--;
-            if(turn_count<=0)
-                turn_count = mysem.size();
+            if(turn_count<0)
+                turn_count = mysem.size()-1;
         }
+        cout<<"point :"<<cards.get_point()<<endl;
+        cout<<"it is "<<turn_count<<" turn"<<endl;
+        cout<<"turn flag "<<turn_flag<<endl;
     }
 }
 
@@ -197,25 +254,4 @@ int main(int argc, char **argv)
         threads.push_back(new_th);
         rc = pthread_create(&threads.back(), NULL, player_turn, (void *)new_client);
    }
-
-    //test
-    /*player p1,p2;
-    players.push_back(p1);
-    players.push_back(p2);
-    initial();
-    cout<<"***\n";
-    players[0].show();
-    cout<<"***\n";
-    players[1].show();
-    cout<<"***\n";
-    cards.change_all_card(&players[0],&players[1]);
-    players[0].show();
-    cout<<"%%%\n";
-    players[1].show();
-    cout<<"%%%\n";
-    cards.change_one_card(&players[0],&players[1]);
-    players[0].show();
-    cout<<"111\n";
-    players[1].show();
-    cout<<"2222\n";*/
 }
