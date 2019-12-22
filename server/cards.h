@@ -28,6 +28,8 @@ public:
     void deal(player *);
     void set_point(int);
     int get_point();
+    void change_one_card(player *, player *);
+    void change_all_card(player *, player *);
 };
 
 class player
@@ -40,4 +42,8 @@ public:
     void show();
     card get_hand(int );
     vector<card>get_total_hand();
+    void setHand(vector<card>);
+    bool gameover();
+    int size_of_hand();
+    void delCard(int x);
 };

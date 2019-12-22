@@ -54,6 +54,21 @@ int pocker_card::get_point()
 {
     return point;
 }
+void pocker_card::change_one_card(player *source, player *target)
+{
+    int temp = rand()%(target->size_of_hand());
+    source->setCards((target->get_hand(temp)));
+    target->delCard(temp);
+}
+void pocker_card::change_all_card(player *source, player *target)
+{
+    vector<card> temp;
+    temp = target->get_total_hand();
+    target->setHand(source->get_total_hand());
+    source->setHand(temp);
+}
+
+
 
 void player::setCards(card temp)
 {
@@ -73,4 +88,22 @@ card player::get_hand(int x)
 vector<card> player::get_total_hand()
 {
     return hand;
+}
+bool player::gameover()
+{
+    if(hand.size()>0)
+        return false;
+    return true;
+}
+void player::setHand(vector<card> hand)
+{
+    this->hand = hand;
+}
+int player::size_of_hand()
+{
+    return hand.size();
+}
+void player::delCard(int x)
+{
+    hand.erase(hand.begin()+x);
 }
