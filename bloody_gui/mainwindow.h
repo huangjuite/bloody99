@@ -15,6 +15,27 @@
 #include <QTimer>
 using namespace std;
 
+typedef struct{
+    int number;
+    int color;
+    bool cover;
+    int x;
+    int y;
+    QLabel *back;
+    QLabel *image;
+}card;
+
+typedef struct{
+    int x;
+    int y;
+    bool used;
+}card_pos;
+
+typedef struct{
+    string name;
+    vector<card> card_set;
+    vector<card_pos> pose_set;
+}player;
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -27,15 +48,20 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
+    vector<player> players;
+    void assign_card(player &pl, int color, int num);
+    void show_card(player &pl,int n);
+    void cover_card(player &pl,int n);
+    void remove_card(player &pl,int n);
 
-private slots:
+public slots:
     void timer_slot();
-
 
 private:
     Ui::MainWindow *ui;
     QVector<QLabel*> image_label;
     QTimer *timer;
+    int count;
 
 
 };

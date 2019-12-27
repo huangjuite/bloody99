@@ -1,5 +1,5 @@
 <RCC>
-    <qresource prefix="img">
+    <qresource prefix="/img">
         <file>images/card/1C.png</file>
         <file>images/card/1D.png</file>
         <file>images/card/1H.png</file>
@@ -52,5 +52,6 @@
         <file>images/card/13D.png</file>
         <file>images/card/13H.png</file>
         <file>images/card/13S.png</file>
+        <file>images/green_back.png</file>
     </qresource>
 </RCC>

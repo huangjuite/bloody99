@@ -738,6 +738,7 @@ compiler_rcc_clean:
 	-$(DEL_FILE) qrc_resources.cpp
 qrc_resources.cpp: ../bloody_gui/resources.qrc \
 		../../../Qt/5.12.6/clang_64/bin/rcc \
+		../bloody_gui/images/green_back.png \
 		../bloody_gui/images/card/8C.png \
 		../bloody_gui/images/card/1S.png \
 		../bloody_gui/images/card/11C.png \
@@ -810,12 +811,18 @@ moc_mainwindow.cpp: ../bloody_gui/mainwindow.h \
 		../../../Qt/5.12.6/clang_64/lib/QtWidgets.framework/Headers/qlabel.h \
 		../../../Qt/5.12.6/clang_64/lib/QtWidgets.framework/Headers/QBoxLayout \
 		../../../Qt/5.12.6/clang_64/lib/QtWidgets.framework/Headers/qboxlayout.h \
+		../../../Qt/5.12.6/clang_64/lib/QtWidgets.framework/Headers/QGridLayout \
+		../../../Qt/5.12.6/clang_64/lib/QtWidgets.framework/Headers/qgridlayout.h \
 		../../../Qt/5.12.6/clang_64/lib/QtWidgets.framework/Headers/QPushButton \
 		../../../Qt/5.12.6/clang_64/lib/QtWidgets.framework/Headers/qpushbutton.h \
 		../../../Qt/5.12.6/clang_64/lib/QtWidgets.framework/Headers/QLineEdit \
 		../../../Qt/5.12.6/clang_64/lib/QtWidgets.framework/Headers/qlineedit.h \
 		../../../Qt/5.12.6/clang_64/lib/QtGui.framework/Headers/QPixmap \
 		../../../Qt/5.12.6/clang_64/lib/QtGui.framework/Headers/qpixmap.h \
+		../../../Qt/5.12.6/clang_64/lib/QtGui.framework/Headers/QTransform \
+		../../../Qt/5.12.6/clang_64/lib/QtGui.framework/Headers/qtransform.h \
+		../../../Qt/5.12.6/clang_64/lib/QtCore.framework/Headers/QTimer \
+		../../../Qt/5.12.6/clang_64/lib/QtCore.framework/Headers/qtimer.h \
 		moc_predefs.h \
 		../../../Qt/5.12.6/clang_64/bin/moc
 	/Users/ray/Qt/5.12.6/clang_64/bin/moc $(DEFINES) --include /Users/ray/Desktop/bloody99/build-bloody_gui-Desktop_Qt_5_12_6_clang_64bit-Debug/moc_predefs.h -I/Users/ray/Qt/5.12.6/clang_64/mkspecs/macx-clang -I/Users/ray/Desktop/bloody99/bloody_gui -I/Users/ray/Qt/5.12.6/clang_64/lib/QtWidgets.framework/Headers -I/Users/ray/Qt/5.12.6/clang_64/lib/QtGui.framework/Headers -I/Users/ray/Qt/5.12.6/clang_64/lib/QtCore.framework/Headers -I. -I/Library/Developer/CommandLineTools/usr/include/c++/v1 -I/Library/Developer/CommandLineTools/usr/lib/clang/11.0.0/include -I/Library/Developer/CommandLineTools/usr/include -I/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include -F/Users/ray/Qt/5.12.6/clang_64/lib ../bloody_gui/mainwindow.h -o moc_mainwindow.cpp
@@ -852,12 +859,18 @@ main.o: ../bloody_gui/main.cpp ../bloody_gui/mainwindow.h \
 		../../../Qt/5.12.6/clang_64/lib/QtWidgets.framework/Headers/qlabel.h \
 		../../../Qt/5.12.6/clang_64/lib/QtWidgets.framework/Headers/QBoxLayout \
 		../../../Qt/5.12.6/clang_64/lib/QtWidgets.framework/Headers/qboxlayout.h \
+		../../../Qt/5.12.6/clang_64/lib/QtWidgets.framework/Headers/QGridLayout \
+		../../../Qt/5.12.6/clang_64/lib/QtWidgets.framework/Headers/qgridlayout.h \
 		../../../Qt/5.12.6/clang_64/lib/QtWidgets.framework/Headers/QPushButton \
 		../../../Qt/5.12.6/clang_64/lib/QtWidgets.framework/Headers/qpushbutton.h \
 		../../../Qt/5.12.6/clang_64/lib/QtWidgets.framework/Headers/QLineEdit \
 		../../../Qt/5.12.6/clang_64/lib/QtWidgets.framework/Headers/qlineedit.h \
 		../../../Qt/5.12.6/clang_64/lib/QtGui.framework/Headers/QPixmap \
 		../../../Qt/5.12.6/clang_64/lib/QtGui.framework/Headers/qpixmap.h \
+		../../../Qt/5.12.6/clang_64/lib/QtGui.framework/Headers/QTransform \
+		../../../Qt/5.12.6/clang_64/lib/QtGui.framework/Headers/qtransform.h \
+		../../../Qt/5.12.6/clang_64/lib/QtCore.framework/Headers/QTimer \
+		../../../Qt/5.12.6/clang_64/lib/QtCore.framework/Headers/qtimer.h \
 		../../../Qt/5.12.6/clang_64/lib/QtWidgets.framework/Headers/QApplication \
 		../../../Qt/5.12.6/clang_64/lib/QtWidgets.framework/Headers/qapplication.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o ../bloody_gui/main.cpp
@@ -871,12 +884,18 @@ mainwindow.o: ../bloody_gui/mainwindow.cpp ../bloody_gui/mainwindow.h \
 		../../../Qt/5.12.6/clang_64/lib/QtWidgets.framework/Headers/qlabel.h \
 		../../../Qt/5.12.6/clang_64/lib/QtWidgets.framework/Headers/QBoxLayout \
 		../../../Qt/5.12.6/clang_64/lib/QtWidgets.framework/Headers/qboxlayout.h \
+		../../../Qt/5.12.6/clang_64/lib/QtWidgets.framework/Headers/QGridLayout \
+		../../../Qt/5.12.6/clang_64/lib/QtWidgets.framework/Headers/qgridlayout.h \
 		../../../Qt/5.12.6/clang_64/lib/QtWidgets.framework/Headers/QPushButton \
 		../../../Qt/5.12.6/clang_64/lib/QtWidgets.framework/Headers/qpushbutton.h \
 		../../../Qt/5.12.6/clang_64/lib/QtWidgets.framework/Headers/QLineEdit \
 		../../../Qt/5.12.6/clang_64/lib/QtWidgets.framework/Headers/qlineedit.h \
 		../../../Qt/5.12.6/clang_64/lib/QtGui.framework/Headers/QPixmap \
 		../../../Qt/5.12.6/clang_64/lib/QtGui.framework/Headers/qpixmap.h \
+		../../../Qt/5.12.6/clang_64/lib/QtGui.framework/Headers/QTransform \
+		../../../Qt/5.12.6/clang_64/lib/QtGui.framework/Headers/qtransform.h \
+		../../../Qt/5.12.6/clang_64/lib/QtCore.framework/Headers/QTimer \
+		../../../Qt/5.12.6/clang_64/lib/QtCore.framework/Headers/qtimer.h \
 		ui_mainwindow.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mainwindow.o ../bloody_gui/mainwindow.cpp
 
