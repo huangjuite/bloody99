@@ -20,6 +20,7 @@ int main(int argc, char *argv[])
 		if ((n = read(connfd, bufr, BUFSIZE)) == -1)
 			errexit("Error: read()\n");
 		printf("Server Reply: %s\n", bufr);
+		cout<<"***"<<bufr[strlen(bufr)-2]<<endl;
 		/* write message to server */
         s = "";
 		while(1)
