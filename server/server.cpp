@@ -72,7 +72,7 @@ void rule(card c, int i, int j, bool deal_flag)
             deal_flag = false;
             break;
         case 10:
-            if(flag)
+            if(j>0)
                 cards.set_point(10);
             else
                 cards.set_point(-10);
@@ -80,7 +80,7 @@ void rule(card c, int i, int j, bool deal_flag)
         case 11:
             break;
         case 12:
-            if(flag)
+            if(j>0)
                 cards.set_point(20);
             else
                 cards.set_point(-20);
@@ -144,7 +144,7 @@ void *total_game(void *data)
     bool deal_flag;
     while(1)
     {
-        if(players.size()>=num_of_player+1)
+        if(players.size()>=num_of_player)
             break;
     }
     initial();
@@ -171,7 +171,7 @@ void *total_game(void *data)
             commands.push_back(atoi(command.c_str()));
         }
         cout<<"commnads size "<<commands.size()<<endl;
-        if(commands.size()>=2)
+        if(commands.size()>=3)
         {
             int sum=0;
             target = commands[commands.size()-1];
@@ -200,7 +200,8 @@ void *total_game(void *data)
         else
         {
             index = commands[0];
-            target = turn_count;
+            target = commands[1];
+            commands.pop_back();
             temp_card = players[turn_count].get_hand(index);
             deal_flag = true;
         }
@@ -211,6 +212,15 @@ void *total_game(void *data)
         }
         rule(temp_card, turn_count, target, deal_flag);
         commands.clear();
+
+        cout<<"point :"<<cards.get_point()<<endl;
+        cout<<"it is "<<turn_count<<" turn"<<endl;
+        cout<<"turn flag "<<turn_flag<<endl;
+        cout<<"card"<<players[turn_count].getString()<<endl;
+
+
+        sprintf(snd, "%d %s", cards.get_point(),players[turn_count].getString().c_str());
+        write(turn_count+4, snd, strlen(snd));
 
         if(turn_flag == true)
         {
@@ -224,9 +234,7 @@ void *total_game(void *data)
             if(turn_count<0)
                 turn_count = mysem.size()-1;
         }
-        cout<<"point :"<<cards.get_point()<<endl;
-        cout<<"it is "<<turn_count<<" turn"<<endl;
-        cout<<"turn flag "<<turn_flag<<endl;
+    
     }
 }
 

@@ -113,9 +113,13 @@ void player::delCard(int x)
 string player::getString()
 {
     string s;
+    cout<<hand.size()<<endl;
     for(int i=0 ; i<hand.size() ; i++)
     {
-        s = s+(hand[i].suit)+" "+to_string(hand[i].point)+"\n";
+        if(i==hand.size()-1)
+            s = s+to_string(hand[i].point);
+        else
+            s = s+to_string(hand[i].point)+" ";
     }
     return s;
 }
