@@ -61,7 +61,11 @@ void rule(card c, int i, int j, bool deal_flag)
             turn_flag = !turn_flag;
             break;
         case 5:
-            turn_count = j;
+            turn_count = turn_count+j;
+            if(turn_count>=players.size())
+                turn_count = 0;
+            if(turn_count<0)
+                turn_count = players.size()-1;
             break;
         case 7:
             cards.change_one_card(&players[i], &players[j]);
@@ -132,6 +136,14 @@ void *player_turn(void *address)
         read(*connfd, rcv, BUFSIZE);
         //printf("in thread %s\n", rcv);
         sem_post(&game_sem);
+        if(players[mynum].get_total_hand().size()==0)
+        {
+            sprintf(snd, "game over");
+            write(*connfd, snd, strlen(snd));
+            players.erase(players.begin()+mynum);
+            mysem.erase(mysem.begin()+mynum);
+            break;
+        }
     }
 }
 
@@ -216,8 +228,6 @@ void *total_game(void *data)
         cout<<"point :"<<cards.get_point()<<endl;
         cout<<"it is "<<turn_count<<" turn"<<endl;
         cout<<"turn flag "<<turn_flag<<endl;
-        cout<<"card"<<players[turn_count].getString()<<endl;
-
 
         sprintf(snd, "%d %s", cards.get_point(),players[turn_count].getString().c_str());
         write(turn_count+4, snd, strlen(snd));
@@ -225,14 +235,14 @@ void *total_game(void *data)
         if(turn_flag == true)
         {
             turn_count++;
-            if(turn_count>=mysem.size())
+            if(turn_count>=players.size())
                 turn_count = 0;
         }
         else
         {
             turn_count--;
             if(turn_count<0)
-                turn_count = mysem.size()-1;
+                turn_count = players.size()-1;
         }
     
     }
