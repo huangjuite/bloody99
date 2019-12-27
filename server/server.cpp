@@ -110,7 +110,7 @@ void *player_turn(void *address)
     {
         if(!g)
             continue;
-        sprintf(snd, "Enter any char for ok\n");
+        sprintf(snd, "Enter any char for ok, you are %d\n", mynum);
         write(*connfd, snd, strlen(snd));
         read(*connfd, rcv, BUFSIZE);
         //printf("%s\n", rcv);
