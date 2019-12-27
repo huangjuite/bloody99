@@ -11,7 +11,7 @@ int main(int argc, char *argv[])
 {
 	int connfd;	/* socket descriptor */
 	int n;
-	char x;
+	string x;
 	string s;
 	char bufw[BUFSIZE], bufr[BUFSIZE];
 	connfd = connectsock(argv[1], argv[2], "tcp");
@@ -23,13 +23,7 @@ int main(int argc, char *argv[])
 		cout<<"***"<<bufr[strlen(bufr)-2]<<endl;
 		/* write message to server */
         s = "";
-		while(1)
-		{
-			cin>>x;
-			if(x=='a')
-				break;
-			s = s+" "+x;
-		}
+		getline(cin,s);
 		sprintf(bufw, "%s", s.c_str());
 		if ((n = write(connfd, bufw, strlen(bufw))) == -1)
 			errexit("Error: write()\n");

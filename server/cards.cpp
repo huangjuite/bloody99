@@ -113,7 +113,6 @@ void player::delCard(int x)
 string player::getString()
 {
     string s;
-    cout<<hand.size()<<endl;
     for(int i=0 ; i<hand.size() ; i++)
     {
         if(i==hand.size()-1)

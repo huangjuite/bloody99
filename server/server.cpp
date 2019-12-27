@@ -24,7 +24,7 @@ vector<sem_t>mysem;
 bool f = false, g = false;
 char snd[BUFSIZE], rcv[BUFSIZE];
 sem_t game_sem;
-int turn_count;
+int turn_count, offset;
 bool turn_flag; //clockwise = true, counterclockwise =false;
 
 void *show(void *thread)
@@ -61,11 +61,8 @@ void rule(card c, int i, int j, bool deal_flag)
             turn_flag = !turn_flag;
             break;
         case 5:
-            turn_count = turn_count+j;
-            if(turn_count>=players.size())
-                turn_count = 0;
-            if(turn_count<0)
-                turn_count = players.size()-1;
+            cout<<"in rule "<<j<<endl;
+            offset=j;
             break;
         case 7:
             cards.change_one_card(&players[i], &players[j]);
@@ -105,8 +102,9 @@ void *player_turn(void *address)
     sem_t sem;
     sem_init(&sem, 0, 0);
     mysem.push_back(sem);
-    int *connfd = (int*)address;
-    int mynum = *connfd-4;
+    int connfd = *(int*)address;
+    int mynum = connfd-4;
+    char ssnd[1024];
     player myplayer;
     players.push_back(myplayer);
     string s;
@@ -114,9 +112,9 @@ void *player_turn(void *address)
     {
         if(!g)
             continue;
-        sprintf(snd, "Enter any char for ok, you are %d", mynum);
-        write(*connfd, snd, strlen(snd));
-        read(*connfd, rcv, BUFSIZE);
+        sprintf(ssnd, "Enter any char for ok %d", mynum);
+        write(connfd, ssnd, strlen(ssnd));
+        read(connfd, rcv, BUFSIZE);
         //printf("%s\n", rcv);
         memset(rcv, 0, BUFSIZE);
         break;
@@ -129,17 +127,19 @@ void *player_turn(void *address)
     while(1)
     {
         sem_wait(&mysem[mynum]);
+        cout<<"****in "<<mynum<<endl;
         s = players[mynum].getString();
         sprintf(snd, "%s", s.c_str());
-        write(*connfd, snd, strlen(snd));
+        write(connfd, snd, strlen(snd));
         memset(rcv, 0, BUFSIZE);
-        read(*connfd, rcv, BUFSIZE);
-        //printf("in thread %s\n", rcv);
+        read(connfd, rcv, BUFSIZE);
         sem_post(&game_sem);
-        if(players[mynum].get_total_hand().size()==0)
+        sem_wait(&mysem[mynum]);
+        if(players[mynum].get_total_hand().size()==0 || cards.get_point()>99)
         {
+            cout<<"you out\n";
             sprintf(snd, "game over");
-            write(*connfd, snd, strlen(snd));
+            write(connfd, snd, strlen(snd));
             players.erase(players.begin()+mynum);
             mysem.erase(mysem.begin()+mynum);
             break;
@@ -150,13 +150,13 @@ void *player_turn(void *address)
 void *total_game(void *data)
 {
     vector<int>commands;
-    string command;
+    int command;
     card temp_card;
     int index,target;
     bool deal_flag;
     while(1)
     {
-        if(players.size()>=num_of_player)
+        if(players.size()>=num_of_player+1)
             break;
     }
     initial();
@@ -177,10 +177,13 @@ void *total_game(void *data)
     {
         sem_post(&mysem[turn_count]);
         sem_wait(&game_sem);
-        istringstream iss(rcv);
+        offset = 0;
+        stringstream iss(rcv);
+        cout<<iss.str()<<endl;
         while(iss>>command)
         {
-            commands.push_back(atoi(command.c_str()));
+            cout<<"command: "<<command<<endl;
+            commands.push_back(command);
         }
         cout<<"commnads size "<<commands.size()<<endl;
         if(commands.size()>=3)
@@ -223,6 +226,7 @@ void *total_game(void *data)
             players[turn_count].delCard(index);
         }
         rule(temp_card, turn_count, target, deal_flag);
+        sem_post(&mysem[turn_count]);
         commands.clear();
 
         cout<<"point :"<<cards.get_point()<<endl;
@@ -230,21 +234,23 @@ void *total_game(void *data)
         cout<<"turn flag "<<turn_flag<<endl;
 
         sprintf(snd, "%d %s", cards.get_point(),players[turn_count].getString().c_str());
-        write(turn_count+4, snd, strlen(snd));
+       // write(turn_count+4, snd, strlen(snd));
 
-        if(turn_flag == true)
-        {
+        if(offset!=0)
+            turn_count = turn_count+offset;
+        else if(turn_flag == true)
             turn_count++;
-            if(turn_count>=players.size())
-                turn_count = 0;
-        }
         else
-        {
             turn_count--;
-            if(turn_count<0)
-                turn_count = players.size()-1;
-        }
-    
+        
+        cout<<"offset "<<offset<<endl;
+        cout<<"turn count now is "<<turn_count<<endl;
+
+        if(turn_count>=players.size())
+            turn_count = 0;
+        if(turn_count<0)
+            turn_count = players.size()-1;
+
     }
 }
 
