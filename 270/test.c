@@ -413,7 +413,7 @@ int main(int argc,char *argv[]){
 	sleep(1);
 	while(1){
 		update7seg();
-		updatelcd();
+		//updatelcd();
 		retval=ioctl(fd,KEY_IOCTL_CHECK_EMTPY,&key);
 		if(retval<0){
 			continue;		
