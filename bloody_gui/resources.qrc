@@ -53,5 +53,8 @@
         <file>images/card/13H.png</file>
         <file>images/card/13S.png</file>
         <file>images/green_back.png</file>
+        <file>images/arrow_dierction.png</file>
+        <file>images/arrow1.png</file>
+        <file>images/arrow2.png</file>
     </qresource>
 </RCC>

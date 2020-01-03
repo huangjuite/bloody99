@@ -14,10 +14,10 @@ EQ            = =
 
 CC            = /Library/Developer/CommandLineTools/usr/bin/clang
 CXX           = /Library/Developer/CommandLineTools/usr/bin/clang++
-DEFINES       = -DQT_DEPRECATED_WARNINGS -DQT_QML_DEBUG -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_CORE_LIB
+DEFINES       = -DQT_DEPRECATED_WARNINGS -DQT_QML_DEBUG -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_NETWORK_LIB -DQT_TESTLIB_LIB -DQT_CORE_LIB -DQT_TESTCASE_BUILDDIR='"/Users/ray/Desktop/bloody99/build-bloody_gui-Desktop_Qt_5_12_6_clang_64bit-Debug"'
 CFLAGS        = -pipe -g $(EXPORT_ARCH_ARGS) -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk -mmacosx-version-min=10.12 -Wall -W -fPIC $(DEFINES)
 CXXFLAGS      = -pipe -stdlib=libc++ -g -std=gnu++11 $(EXPORT_ARCH_ARGS) -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk -mmacosx-version-min=10.12 -Wall -W -fPIC $(DEFINES)
-INCPATH       = -I../bloody_gui -I. -I../../../Qt/5.12.6/clang_64/lib/QtWidgets.framework/Headers -I../../../Qt/5.12.6/clang_64/lib/QtGui.framework/Headers -I../../../Qt/5.12.6/clang_64/lib/QtCore.framework/Headers -I. -I/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/System/Library/Frameworks/OpenGL.framework/Headers -I/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/System/Library/Frameworks/AGL.framework/Headers -I. -I../../../Qt/5.12.6/clang_64/mkspecs/macx-clang -F/Users/ray/Qt/5.12.6/clang_64/lib
+INCPATH       = -I../bloody_gui -I. -I../../../Qt/5.12.6/clang_64/lib/QtWidgets.framework/Headers -I../../../Qt/5.12.6/clang_64/lib/QtGui.framework/Headers -I../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers -I../../../Qt/5.12.6/clang_64/lib/QtTest.framework/Headers -I../../../Qt/5.12.6/clang_64/lib/QtCore.framework/Headers -I. -I/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/System/Library/Frameworks/OpenGL.framework/Headers -I/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/System/Library/Frameworks/AGL.framework/Headers -I. -I../../../Qt/5.12.6/clang_64/mkspecs/macx-clang -F/Users/ray/Qt/5.12.6/clang_64/lib
 QMAKE         = /Users/ray/Qt/5.12.6/clang_64/bin/qmake
 DEL_FILE      = rm -f
 CHK_DIR_EXISTS= test -d
@@ -40,7 +40,7 @@ DISTNAME      = bloody_gui1.0.0
 DISTDIR = /Users/ray/Desktop/bloody99/build-bloody_gui-Desktop_Qt_5_12_6_clang_64bit-Debug/.tmp/bloody_gui1.0.0
 LINK          = /Library/Developer/CommandLineTools/usr/bin/clang++
 LFLAGS        = -stdlib=libc++ -headerpad_max_install_names $(EXPORT_ARCH_ARGS) -Wl,-syslibroot,/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk -mmacosx-version-min=10.12 -Wl,-rpath,@executable_path/../Frameworks -Wl,-rpath,/Users/ray/Qt/5.12.6/clang_64/lib
-LIBS          = $(SUBLIBS) -F/Users/ray/Qt/5.12.6/clang_64/lib -framework QtWidgets -framework QtGui -framework QtCore -framework DiskArbitration -framework IOKit -framework OpenGL -framework AGL   
+LIBS          = $(SUBLIBS) -F/Users/ray/Qt/5.12.6/clang_64/lib -framework QtWidgets -framework QtGui -framework QtNetwork -framework QtTest -framework Security -framework Foundation -framework ApplicationServices -framework QtCore -framework DiskArbitration -framework IOKit -framework OpenGL -framework AGL   
 AR            = /Library/Developer/CommandLineTools/usr/bin/ar cq
 RANLIB        = /Library/Developer/CommandLineTools/usr/bin/ranlib -s
 SED           = sed
@@ -52,13 +52,29 @@ OBJECTS_DIR   = ./
 
 ####### Files
 
-SOURCES       = ../bloody_gui/main.cpp \
-		../bloody_gui/mainwindow.cpp qrc_resources.cpp \
-		moc_mainwindow.cpp
-OBJECTS       = main.o \
+SOURCES       = ../bloody_gui/gamethread.cpp \
+		../bloody_gui/main.cpp \
+		../bloody_gui/mainwindow.cpp \
+		../bloody_gui/cards.cpp \
+		../bloody_gui/myserver.cpp \
+		../bloody_gui/mythread.cpp \
+		../bloody_gui/sockop.cpp qrc_resources.cpp \
+		moc_gamethread.cpp \
+		moc_mainwindow.cpp \
+		moc_myserver.cpp \
+		moc_mythread.cpp
+OBJECTS       = gamethread.o \
+		main.o \
 		mainwindow.o \
+		cards.o \
+		myserver.o \
+		mythread.o \
+		sockop.o \
 		qrc_resources.o \
-		moc_mainwindow.o
+		moc_gamethread.o \
+		moc_mainwindow.o \
+		moc_myserver.o \
+		moc_mythread.o
 DIST          = ../../../Qt/5.12.6/clang_64/mkspecs/features/spec_pre.prf \
 		../../../Qt/5.12.6/clang_64/mkspecs/qdevice.pri \
 		../../../Qt/5.12.6/clang_64/mkspecs/features/device_config.prf \
@@ -241,6 +257,7 @@ DIST          = ../../../Qt/5.12.6/clang_64/mkspecs/features/spec_pre.prf \
 		../../../Qt/5.12.6/clang_64/mkspecs/features/qt.prf \
 		../../../Qt/5.12.6/clang_64/mkspecs/features/resources.prf \
 		../../../Qt/5.12.6/clang_64/mkspecs/features/moc.prf \
+		../../../Qt/5.12.6/clang_64/mkspecs/features/testlib_defines.prf \
 		../../../Qt/5.12.6/clang_64/mkspecs/features/unix/opengl.prf \
 		../../../Qt/5.12.6/clang_64/mkspecs/features/uic.prf \
 		../../../Qt/5.12.6/clang_64/mkspecs/features/unix/thread.prf \
@@ -252,8 +269,18 @@ DIST          = ../../../Qt/5.12.6/clang_64/mkspecs/features/spec_pre.prf \
 		../../../Qt/5.12.6/clang_64/mkspecs/features/exceptions.prf \
 		../../../Qt/5.12.6/clang_64/mkspecs/features/yacc.prf \
 		../../../Qt/5.12.6/clang_64/mkspecs/features/lex.prf \
-		../bloody_gui/bloody_gui.pro ../bloody_gui/mainwindow.h ../bloody_gui/main.cpp \
-		../bloody_gui/mainwindow.cpp
+		../bloody_gui/bloody_gui.pro ../bloody_gui/gamethread.h \
+		../bloody_gui/mainwindow.h \
+		../bloody_gui/cards.h \
+		../bloody_gui/myserver.h \
+		../bloody_gui/mythread.h \
+		../bloody_gui/sockop.h ../bloody_gui/gamethread.cpp \
+		../bloody_gui/main.cpp \
+		../bloody_gui/mainwindow.cpp \
+		../bloody_gui/cards.cpp \
+		../bloody_gui/myserver.cpp \
+		../bloody_gui/mythread.cpp \
+		../bloody_gui/sockop.cpp
 QMAKE_TARGET  = bloody_gui
 DESTDIR       = 
 TARGET        = bloody_gui.app/Contents/MacOS/bloody_gui
@@ -458,6 +485,7 @@ Makefile: ../bloody_gui/bloody_gui.pro ../../../Qt/5.12.6/clang_64/mkspecs/macx-
 		../../../Qt/5.12.6/clang_64/mkspecs/features/qt.prf \
 		../../../Qt/5.12.6/clang_64/mkspecs/features/resources.prf \
 		../../../Qt/5.12.6/clang_64/mkspecs/features/moc.prf \
+		../../../Qt/5.12.6/clang_64/mkspecs/features/testlib_defines.prf \
 		../../../Qt/5.12.6/clang_64/mkspecs/features/unix/opengl.prf \
 		../../../Qt/5.12.6/clang_64/mkspecs/features/uic.prf \
 		../../../Qt/5.12.6/clang_64/mkspecs/features/unix/thread.prf \
@@ -473,6 +501,8 @@ Makefile: ../bloody_gui/bloody_gui.pro ../../../Qt/5.12.6/clang_64/mkspecs/macx-
 		../bloody_gui/resources.qrc \
 		../../../Qt/5.12.6/clang_64/lib/QtWidgets.framework/QtWidgets.prl \
 		../../../Qt/5.12.6/clang_64/lib/QtGui.framework/QtGui.prl \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/QtNetwork.prl \
+		../../../Qt/5.12.6/clang_64/lib/QtTest.framework/QtTest.prl \
 		../../../Qt/5.12.6/clang_64/lib/QtCore.framework/QtCore.prl
 	$(QMAKE) -o Makefile ../bloody_gui/bloody_gui.pro -spec macx-clang CONFIG+=debug CONFIG+=x86_64 CONFIG+=qml_debug
 ../../../Qt/5.12.6/clang_64/mkspecs/features/spec_pre.prf:
@@ -657,6 +687,7 @@ Makefile: ../bloody_gui/bloody_gui.pro ../../../Qt/5.12.6/clang_64/mkspecs/macx-
 ../../../Qt/5.12.6/clang_64/mkspecs/features/qt.prf:
 ../../../Qt/5.12.6/clang_64/mkspecs/features/resources.prf:
 ../../../Qt/5.12.6/clang_64/mkspecs/features/moc.prf:
+../../../Qt/5.12.6/clang_64/mkspecs/features/testlib_defines.prf:
 ../../../Qt/5.12.6/clang_64/mkspecs/features/unix/opengl.prf:
 ../../../Qt/5.12.6/clang_64/mkspecs/features/uic.prf:
 ../../../Qt/5.12.6/clang_64/mkspecs/features/unix/thread.prf:
@@ -672,6 +703,8 @@ Makefile: ../bloody_gui/bloody_gui.pro ../../../Qt/5.12.6/clang_64/mkspecs/macx-
 ../bloody_gui/resources.qrc:
 ../../../Qt/5.12.6/clang_64/lib/QtWidgets.framework/QtWidgets.prl:
 ../../../Qt/5.12.6/clang_64/lib/QtGui.framework/QtGui.prl:
+../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/QtNetwork.prl:
+../../../Qt/5.12.6/clang_64/lib/QtTest.framework/QtTest.prl:
 ../../../Qt/5.12.6/clang_64/lib/QtCore.framework/QtCore.prl:
 qmake: FORCE
 	@$(QMAKE) -o Makefile ../bloody_gui/bloody_gui.pro -spec macx-clang CONFIG+=debug CONFIG+=x86_64 CONFIG+=qml_debug
@@ -704,8 +737,8 @@ distdir: FORCE
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents ../bloody_gui/resources.qrc $(DISTDIR)/
 	$(COPY_FILE) --parents ../../../Qt/5.12.6/clang_64/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents ../bloody_gui/mainwindow.h $(DISTDIR)/
-	$(COPY_FILE) --parents ../bloody_gui/main.cpp ../bloody_gui/mainwindow.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents ../bloody_gui/gamethread.h ../bloody_gui/mainwindow.h ../bloody_gui/cards.h ../bloody_gui/myserver.h ../bloody_gui/mythread.h ../bloody_gui/sockop.h $(DISTDIR)/
+	$(COPY_FILE) --parents ../bloody_gui/gamethread.cpp ../bloody_gui/main.cpp ../bloody_gui/mainwindow.cpp ../bloody_gui/cards.cpp ../bloody_gui/myserver.cpp ../bloody_gui/mythread.cpp ../bloody_gui/sockop.cpp $(DISTDIR)/
 	$(COPY_FILE) --parents ../bloody_gui/mainwindow.ui $(DISTDIR)/
 
 
@@ -739,6 +772,9 @@ compiler_rcc_clean:
 qrc_resources.cpp: ../bloody_gui/resources.qrc \
 		../../../Qt/5.12.6/clang_64/bin/rcc \
 		../bloody_gui/images/green_back.png \
+		../bloody_gui/images/arrow_dierction.png \
+		../bloody_gui/images/arrow2.png \
+		../bloody_gui/images/arrow1.png \
 		../bloody_gui/images/card/8C.png \
 		../bloody_gui/images/card/1S.png \
 		../bloody_gui/images/card/11C.png \
@@ -799,9 +835,88 @@ compiler_moc_predefs_clean:
 moc_predefs.h: ../../../Qt/5.12.6/clang_64/mkspecs/features/data/dummy.cpp
 	/Library/Developer/CommandLineTools/usr/bin/clang++ -pipe -stdlib=libc++ -g -std=gnu++11 $(EXPORT_ARCH_ARGS) -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk -mmacosx-version-min=10.12 -Wall -W -dM -E -o moc_predefs.h ../../../Qt/5.12.6/clang_64/mkspecs/features/data/dummy.cpp
 
-compiler_moc_header_make_all: moc_mainwindow.cpp
+compiler_moc_header_make_all: moc_gamethread.cpp moc_mainwindow.cpp moc_myserver.cpp moc_mythread.cpp
 compiler_moc_header_clean:
-	-$(DEL_FILE) moc_mainwindow.cpp
+	-$(DEL_FILE) moc_gamethread.cpp moc_mainwindow.cpp moc_myserver.cpp moc_mythread.cpp
+moc_gamethread.cpp: ../bloody_gui/gamethread.h \
+		../../../Qt/5.12.6/clang_64/lib/QtCore.framework/Headers/QObject \
+		../../../Qt/5.12.6/clang_64/lib/QtCore.framework/Headers/qobject.h \
+		../../../Qt/5.12.6/clang_64/lib/QtCore.framework/Headers/QThread \
+		../../../Qt/5.12.6/clang_64/lib/QtCore.framework/Headers/qthread.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/QTcpSocket \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qtcpsocket.h \
+		../../../Qt/5.12.6/clang_64/lib/QtCore.framework/Headers/QDebug \
+		../../../Qt/5.12.6/clang_64/lib/QtCore.framework/Headers/qdebug.h \
+		../bloody_gui/mainwindow.h \
+		../../../Qt/5.12.6/clang_64/lib/QtWidgets.framework/Headers/QMainWindow \
+		../../../Qt/5.12.6/clang_64/lib/QtWidgets.framework/Headers/qmainwindow.h \
+		../../../Qt/5.12.6/clang_64/lib/QtCore.framework/Headers/QVector \
+		../../../Qt/5.12.6/clang_64/lib/QtCore.framework/Headers/qvector.h \
+		../../../Qt/5.12.6/clang_64/lib/QtWidgets.framework/Headers/QLabel \
+		../../../Qt/5.12.6/clang_64/lib/QtWidgets.framework/Headers/qlabel.h \
+		../../../Qt/5.12.6/clang_64/lib/QtWidgets.framework/Headers/QBoxLayout \
+		../../../Qt/5.12.6/clang_64/lib/QtWidgets.framework/Headers/qboxlayout.h \
+		../../../Qt/5.12.6/clang_64/lib/QtWidgets.framework/Headers/QGridLayout \
+		../../../Qt/5.12.6/clang_64/lib/QtWidgets.framework/Headers/qgridlayout.h \
+		../../../Qt/5.12.6/clang_64/lib/QtWidgets.framework/Headers/QPushButton \
+		../../../Qt/5.12.6/clang_64/lib/QtWidgets.framework/Headers/qpushbutton.h \
+		../../../Qt/5.12.6/clang_64/lib/QtWidgets.framework/Headers/QLineEdit \
+		../../../Qt/5.12.6/clang_64/lib/QtWidgets.framework/Headers/qlineedit.h \
+		../../../Qt/5.12.6/clang_64/lib/QtGui.framework/Headers/QPixmap \
+		../../../Qt/5.12.6/clang_64/lib/QtGui.framework/Headers/qpixmap.h \
+		../../../Qt/5.12.6/clang_64/lib/QtGui.framework/Headers/QTransform \
+		../../../Qt/5.12.6/clang_64/lib/QtGui.framework/Headers/qtransform.h \
+		../../../Qt/5.12.6/clang_64/lib/QtCore.framework/Headers/QTimer \
+		../../../Qt/5.12.6/clang_64/lib/QtCore.framework/Headers/qtimer.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/QtNetwork \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qtnetworkglobal.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qabstractnetworkcache.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qabstractsocket.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qauthenticator.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qdnslookup.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qdtls.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qhostaddress.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qhostinfo.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qhstspolicy.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qhttpmultipart.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qlocalserver.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qlocalsocket.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qnetworkaccessmanager.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qnetworkconfigmanager.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qnetworkconfiguration.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qnetworkcookie.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qnetworkcookiejar.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qnetworkdatagram.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qnetworkdiskcache.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qnetworkinterface.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qnetworkproxy.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qnetworkreply.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qnetworkrequest.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qnetworksession.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qpassworddigestor.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qsctpserver.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qsctpsocket.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qssl.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qsslcertificate.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qsslcertificateextension.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qsslcipher.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qsslconfiguration.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qssldiffiehellmanparameters.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qsslellipticcurve.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qsslerror.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qsslkey.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qsslpresharedkeyauthenticator.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qsslsocket.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qtcpserver.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qudpsocket.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qtnetworkversion.h \
+		../../../Qt/5.12.6/clang_64/lib/QtTest.framework/Headers/QTest \
+		../../../Qt/5.12.6/clang_64/lib/QtTest.framework/Headers/qtest.h \
+		../bloody_gui/cards.h \
+		moc_predefs.h \
+		../../../Qt/5.12.6/clang_64/bin/moc
+	/Users/ray/Qt/5.12.6/clang_64/bin/moc $(DEFINES) --include /Users/ray/Desktop/bloody99/build-bloody_gui-Desktop_Qt_5_12_6_clang_64bit-Debug/moc_predefs.h -I/Users/ray/Qt/5.12.6/clang_64/mkspecs/macx-clang -I/Users/ray/Desktop/bloody99/bloody_gui -I/Users/ray/Qt/5.12.6/clang_64/lib/QtWidgets.framework/Headers -I/Users/ray/Qt/5.12.6/clang_64/lib/QtGui.framework/Headers -I/Users/ray/Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers -I/Users/ray/Qt/5.12.6/clang_64/lib/QtTest.framework/Headers -I/Users/ray/Qt/5.12.6/clang_64/lib/QtCore.framework/Headers -I. -I/Library/Developer/CommandLineTools/usr/include/c++/v1 -I/Library/Developer/CommandLineTools/usr/lib/clang/11.0.0/include -I/Library/Developer/CommandLineTools/usr/include -I/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include -F/Users/ray/Qt/5.12.6/clang_64/lib ../bloody_gui/gamethread.h -o moc_gamethread.cpp
+
 moc_mainwindow.cpp: ../bloody_gui/mainwindow.h \
 		../../../Qt/5.12.6/clang_64/lib/QtWidgets.framework/Headers/QMainWindow \
 		../../../Qt/5.12.6/clang_64/lib/QtWidgets.framework/Headers/qmainwindow.h \
@@ -823,9 +938,214 @@ moc_mainwindow.cpp: ../bloody_gui/mainwindow.h \
 		../../../Qt/5.12.6/clang_64/lib/QtGui.framework/Headers/qtransform.h \
 		../../../Qt/5.12.6/clang_64/lib/QtCore.framework/Headers/QTimer \
 		../../../Qt/5.12.6/clang_64/lib/QtCore.framework/Headers/qtimer.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/QtNetwork \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qtnetworkglobal.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qabstractnetworkcache.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qabstractsocket.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qauthenticator.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qdnslookup.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qdtls.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qhostaddress.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qhostinfo.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qhstspolicy.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qhttpmultipart.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qlocalserver.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qlocalsocket.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qnetworkaccessmanager.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qnetworkconfigmanager.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qnetworkconfiguration.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qnetworkcookie.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qnetworkcookiejar.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qnetworkdatagram.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qnetworkdiskcache.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qnetworkinterface.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qnetworkproxy.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qnetworkreply.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qnetworkrequest.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qnetworksession.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qpassworddigestor.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qsctpserver.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qsctpsocket.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qssl.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qsslcertificate.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qsslcertificateextension.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qsslcipher.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qsslconfiguration.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qssldiffiehellmanparameters.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qsslellipticcurve.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qsslerror.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qsslkey.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qsslpresharedkeyauthenticator.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qsslsocket.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qtcpserver.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qtcpsocket.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qudpsocket.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qtnetworkversion.h \
+		../../../Qt/5.12.6/clang_64/lib/QtTest.framework/Headers/QTest \
+		../../../Qt/5.12.6/clang_64/lib/QtTest.framework/Headers/qtest.h \
+		../bloody_gui/cards.h \
 		moc_predefs.h \
 		../../../Qt/5.12.6/clang_64/bin/moc
-	/Users/ray/Qt/5.12.6/clang_64/bin/moc $(DEFINES) --include /Users/ray/Desktop/bloody99/build-bloody_gui-Desktop_Qt_5_12_6_clang_64bit-Debug/moc_predefs.h -I/Users/ray/Qt/5.12.6/clang_64/mkspecs/macx-clang -I/Users/ray/Desktop/bloody99/bloody_gui -I/Users/ray/Qt/5.12.6/clang_64/lib/QtWidgets.framework/Headers -I/Users/ray/Qt/5.12.6/clang_64/lib/QtGui.framework/Headers -I/Users/ray/Qt/5.12.6/clang_64/lib/QtCore.framework/Headers -I. -I/Library/Developer/CommandLineTools/usr/include/c++/v1 -I/Library/Developer/CommandLineTools/usr/lib/clang/11.0.0/include -I/Library/Developer/CommandLineTools/usr/include -I/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include -F/Users/ray/Qt/5.12.6/clang_64/lib ../bloody_gui/mainwindow.h -o moc_mainwindow.cpp
+	/Users/ray/Qt/5.12.6/clang_64/bin/moc $(DEFINES) --include /Users/ray/Desktop/bloody99/build-bloody_gui-Desktop_Qt_5_12_6_clang_64bit-Debug/moc_predefs.h -I/Users/ray/Qt/5.12.6/clang_64/mkspecs/macx-clang -I/Users/ray/Desktop/bloody99/bloody_gui -I/Users/ray/Qt/5.12.6/clang_64/lib/QtWidgets.framework/Headers -I/Users/ray/Qt/5.12.6/clang_64/lib/QtGui.framework/Headers -I/Users/ray/Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers -I/Users/ray/Qt/5.12.6/clang_64/lib/QtTest.framework/Headers -I/Users/ray/Qt/5.12.6/clang_64/lib/QtCore.framework/Headers -I. -I/Library/Developer/CommandLineTools/usr/include/c++/v1 -I/Library/Developer/CommandLineTools/usr/lib/clang/11.0.0/include -I/Library/Developer/CommandLineTools/usr/include -I/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include -F/Users/ray/Qt/5.12.6/clang_64/lib ../bloody_gui/mainwindow.h -o moc_mainwindow.cpp
+
+moc_myserver.cpp: ../bloody_gui/myserver.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/QTcpServer \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qtcpserver.h \
+		../bloody_gui/mythread.h \
+		../../../Qt/5.12.6/clang_64/lib/QtCore.framework/Headers/QThread \
+		../../../Qt/5.12.6/clang_64/lib/QtCore.framework/Headers/qthread.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/QTcpSocket \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qtcpsocket.h \
+		../../../Qt/5.12.6/clang_64/lib/QtCore.framework/Headers/QDebug \
+		../../../Qt/5.12.6/clang_64/lib/QtCore.framework/Headers/qdebug.h \
+		../bloody_gui/mainwindow.h \
+		../../../Qt/5.12.6/clang_64/lib/QtWidgets.framework/Headers/QMainWindow \
+		../../../Qt/5.12.6/clang_64/lib/QtWidgets.framework/Headers/qmainwindow.h \
+		../../../Qt/5.12.6/clang_64/lib/QtCore.framework/Headers/QVector \
+		../../../Qt/5.12.6/clang_64/lib/QtCore.framework/Headers/qvector.h \
+		../../../Qt/5.12.6/clang_64/lib/QtWidgets.framework/Headers/QLabel \
+		../../../Qt/5.12.6/clang_64/lib/QtWidgets.framework/Headers/qlabel.h \
+		../../../Qt/5.12.6/clang_64/lib/QtWidgets.framework/Headers/QBoxLayout \
+		../../../Qt/5.12.6/clang_64/lib/QtWidgets.framework/Headers/qboxlayout.h \
+		../../../Qt/5.12.6/clang_64/lib/QtWidgets.framework/Headers/QGridLayout \
+		../../../Qt/5.12.6/clang_64/lib/QtWidgets.framework/Headers/qgridlayout.h \
+		../../../Qt/5.12.6/clang_64/lib/QtWidgets.framework/Headers/QPushButton \
+		../../../Qt/5.12.6/clang_64/lib/QtWidgets.framework/Headers/qpushbutton.h \
+		../../../Qt/5.12.6/clang_64/lib/QtWidgets.framework/Headers/QLineEdit \
+		../../../Qt/5.12.6/clang_64/lib/QtWidgets.framework/Headers/qlineedit.h \
+		../../../Qt/5.12.6/clang_64/lib/QtGui.framework/Headers/QPixmap \
+		../../../Qt/5.12.6/clang_64/lib/QtGui.framework/Headers/qpixmap.h \
+		../../../Qt/5.12.6/clang_64/lib/QtGui.framework/Headers/QTransform \
+		../../../Qt/5.12.6/clang_64/lib/QtGui.framework/Headers/qtransform.h \
+		../../../Qt/5.12.6/clang_64/lib/QtCore.framework/Headers/QTimer \
+		../../../Qt/5.12.6/clang_64/lib/QtCore.framework/Headers/qtimer.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/QtNetwork \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qtnetworkglobal.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qabstractnetworkcache.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qabstractsocket.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qauthenticator.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qdnslookup.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qdtls.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qhostaddress.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qhostinfo.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qhstspolicy.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qhttpmultipart.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qlocalserver.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qlocalsocket.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qnetworkaccessmanager.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qnetworkconfigmanager.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qnetworkconfiguration.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qnetworkcookie.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qnetworkcookiejar.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qnetworkdatagram.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qnetworkdiskcache.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qnetworkinterface.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qnetworkproxy.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qnetworkreply.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qnetworkrequest.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qnetworksession.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qpassworddigestor.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qsctpserver.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qsctpsocket.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qssl.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qsslcertificate.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qsslcertificateextension.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qsslcipher.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qsslconfiguration.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qssldiffiehellmanparameters.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qsslellipticcurve.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qsslerror.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qsslkey.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qsslpresharedkeyauthenticator.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qsslsocket.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qudpsocket.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qtnetworkversion.h \
+		../../../Qt/5.12.6/clang_64/lib/QtTest.framework/Headers/QTest \
+		../../../Qt/5.12.6/clang_64/lib/QtTest.framework/Headers/qtest.h \
+		../bloody_gui/cards.h \
+		../bloody_gui/gamethread.h \
+		../../../Qt/5.12.6/clang_64/lib/QtCore.framework/Headers/QObject \
+		../../../Qt/5.12.6/clang_64/lib/QtCore.framework/Headers/qobject.h \
+		moc_predefs.h \
+		../../../Qt/5.12.6/clang_64/bin/moc
+	/Users/ray/Qt/5.12.6/clang_64/bin/moc $(DEFINES) --include /Users/ray/Desktop/bloody99/build-bloody_gui-Desktop_Qt_5_12_6_clang_64bit-Debug/moc_predefs.h -I/Users/ray/Qt/5.12.6/clang_64/mkspecs/macx-clang -I/Users/ray/Desktop/bloody99/bloody_gui -I/Users/ray/Qt/5.12.6/clang_64/lib/QtWidgets.framework/Headers -I/Users/ray/Qt/5.12.6/clang_64/lib/QtGui.framework/Headers -I/Users/ray/Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers -I/Users/ray/Qt/5.12.6/clang_64/lib/QtTest.framework/Headers -I/Users/ray/Qt/5.12.6/clang_64/lib/QtCore.framework/Headers -I. -I/Library/Developer/CommandLineTools/usr/include/c++/v1 -I/Library/Developer/CommandLineTools/usr/lib/clang/11.0.0/include -I/Library/Developer/CommandLineTools/usr/include -I/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include -F/Users/ray/Qt/5.12.6/clang_64/lib ../bloody_gui/myserver.h -o moc_myserver.cpp
+
+moc_mythread.cpp: ../bloody_gui/mythread.h \
+		../../../Qt/5.12.6/clang_64/lib/QtCore.framework/Headers/QThread \
+		../../../Qt/5.12.6/clang_64/lib/QtCore.framework/Headers/qthread.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/QTcpSocket \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qtcpsocket.h \
+		../../../Qt/5.12.6/clang_64/lib/QtCore.framework/Headers/QDebug \
+		../../../Qt/5.12.6/clang_64/lib/QtCore.framework/Headers/qdebug.h \
+		../bloody_gui/mainwindow.h \
+		../../../Qt/5.12.6/clang_64/lib/QtWidgets.framework/Headers/QMainWindow \
+		../../../Qt/5.12.6/clang_64/lib/QtWidgets.framework/Headers/qmainwindow.h \
+		../../../Qt/5.12.6/clang_64/lib/QtCore.framework/Headers/QVector \
+		../../../Qt/5.12.6/clang_64/lib/QtCore.framework/Headers/qvector.h \
+		../../../Qt/5.12.6/clang_64/lib/QtWidgets.framework/Headers/QLabel \
+		../../../Qt/5.12.6/clang_64/lib/QtWidgets.framework/Headers/qlabel.h \
+		../../../Qt/5.12.6/clang_64/lib/QtWidgets.framework/Headers/QBoxLayout \
+		../../../Qt/5.12.6/clang_64/lib/QtWidgets.framework/Headers/qboxlayout.h \
+		../../../Qt/5.12.6/clang_64/lib/QtWidgets.framework/Headers/QGridLayout \
+		../../../Qt/5.12.6/clang_64/lib/QtWidgets.framework/Headers/qgridlayout.h \
+		../../../Qt/5.12.6/clang_64/lib/QtWidgets.framework/Headers/QPushButton \
+		../../../Qt/5.12.6/clang_64/lib/QtWidgets.framework/Headers/qpushbutton.h \
+		../../../Qt/5.12.6/clang_64/lib/QtWidgets.framework/Headers/QLineEdit \
+		../../../Qt/5.12.6/clang_64/lib/QtWidgets.framework/Headers/qlineedit.h \
+		../../../Qt/5.12.6/clang_64/lib/QtGui.framework/Headers/QPixmap \
+		../../../Qt/5.12.6/clang_64/lib/QtGui.framework/Headers/qpixmap.h \
+		../../../Qt/5.12.6/clang_64/lib/QtGui.framework/Headers/QTransform \
+		../../../Qt/5.12.6/clang_64/lib/QtGui.framework/Headers/qtransform.h \
+		../../../Qt/5.12.6/clang_64/lib/QtCore.framework/Headers/QTimer \
+		../../../Qt/5.12.6/clang_64/lib/QtCore.framework/Headers/qtimer.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/QtNetwork \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qtnetworkglobal.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qabstractnetworkcache.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qabstractsocket.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qauthenticator.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qdnslookup.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qdtls.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qhostaddress.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qhostinfo.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qhstspolicy.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qhttpmultipart.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qlocalserver.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qlocalsocket.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qnetworkaccessmanager.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qnetworkconfigmanager.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qnetworkconfiguration.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qnetworkcookie.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qnetworkcookiejar.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qnetworkdatagram.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qnetworkdiskcache.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qnetworkinterface.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qnetworkproxy.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qnetworkreply.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qnetworkrequest.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qnetworksession.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qpassworddigestor.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qsctpserver.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qsctpsocket.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qssl.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qsslcertificate.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qsslcertificateextension.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qsslcipher.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qsslconfiguration.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qssldiffiehellmanparameters.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qsslellipticcurve.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qsslerror.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qsslkey.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qsslpresharedkeyauthenticator.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qsslsocket.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qtcpserver.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qudpsocket.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qtnetworkversion.h \
+		../../../Qt/5.12.6/clang_64/lib/QtTest.framework/Headers/QTest \
+		../../../Qt/5.12.6/clang_64/lib/QtTest.framework/Headers/qtest.h \
+		../bloody_gui/cards.h \
+		moc_predefs.h \
+		../../../Qt/5.12.6/clang_64/bin/moc
+	/Users/ray/Qt/5.12.6/clang_64/bin/moc $(DEFINES) --include /Users/ray/Desktop/bloody99/build-bloody_gui-Desktop_Qt_5_12_6_clang_64bit-Debug/moc_predefs.h -I/Users/ray/Qt/5.12.6/clang_64/mkspecs/macx-clang -I/Users/ray/Desktop/bloody99/bloody_gui -I/Users/ray/Qt/5.12.6/clang_64/lib/QtWidgets.framework/Headers -I/Users/ray/Qt/5.12.6/clang_64/lib/QtGui.framework/Headers -I/Users/ray/Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers -I/Users/ray/Qt/5.12.6/clang_64/lib/QtTest.framework/Headers -I/Users/ray/Qt/5.12.6/clang_64/lib/QtCore.framework/Headers -I. -I/Library/Developer/CommandLineTools/usr/include/c++/v1 -I/Library/Developer/CommandLineTools/usr/lib/clang/11.0.0/include -I/Library/Developer/CommandLineTools/usr/include -I/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include -F/Users/ray/Qt/5.12.6/clang_64/lib ../bloody_gui/mythread.h -o moc_mythread.cpp
 
 compiler_moc_objc_header_make_all:
 compiler_moc_objc_header_clean:
@@ -850,7 +1170,16 @@ compiler_clean: compiler_rcc_clean compiler_moc_predefs_clean compiler_moc_heade
 
 ####### Compile
 
-main.o: ../bloody_gui/main.cpp ../bloody_gui/mainwindow.h \
+gamethread.o: ../bloody_gui/gamethread.cpp ../bloody_gui/gamethread.h \
+		../../../Qt/5.12.6/clang_64/lib/QtCore.framework/Headers/QObject \
+		../../../Qt/5.12.6/clang_64/lib/QtCore.framework/Headers/qobject.h \
+		../../../Qt/5.12.6/clang_64/lib/QtCore.framework/Headers/QThread \
+		../../../Qt/5.12.6/clang_64/lib/QtCore.framework/Headers/qthread.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/QTcpSocket \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qtcpsocket.h \
+		../../../Qt/5.12.6/clang_64/lib/QtCore.framework/Headers/QDebug \
+		../../../Qt/5.12.6/clang_64/lib/QtCore.framework/Headers/qdebug.h \
+		../bloody_gui/mainwindow.h \
 		../../../Qt/5.12.6/clang_64/lib/QtWidgets.framework/Headers/QMainWindow \
 		../../../Qt/5.12.6/clang_64/lib/QtWidgets.framework/Headers/qmainwindow.h \
 		../../../Qt/5.12.6/clang_64/lib/QtCore.framework/Headers/QVector \
@@ -871,8 +1200,133 @@ main.o: ../bloody_gui/main.cpp ../bloody_gui/mainwindow.h \
 		../../../Qt/5.12.6/clang_64/lib/QtGui.framework/Headers/qtransform.h \
 		../../../Qt/5.12.6/clang_64/lib/QtCore.framework/Headers/QTimer \
 		../../../Qt/5.12.6/clang_64/lib/QtCore.framework/Headers/qtimer.h \
-		../../../Qt/5.12.6/clang_64/lib/QtWidgets.framework/Headers/QApplication \
-		../../../Qt/5.12.6/clang_64/lib/QtWidgets.framework/Headers/qapplication.h
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/QtNetwork \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qtnetworkglobal.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qabstractnetworkcache.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qabstractsocket.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qauthenticator.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qdnslookup.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qdtls.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qhostaddress.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qhostinfo.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qhstspolicy.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qhttpmultipart.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qlocalserver.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qlocalsocket.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qnetworkaccessmanager.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qnetworkconfigmanager.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qnetworkconfiguration.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qnetworkcookie.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qnetworkcookiejar.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qnetworkdatagram.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qnetworkdiskcache.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qnetworkinterface.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qnetworkproxy.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qnetworkreply.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qnetworkrequest.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qnetworksession.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qpassworddigestor.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qsctpserver.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qsctpsocket.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qssl.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qsslcertificate.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qsslcertificateextension.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qsslcipher.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qsslconfiguration.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qssldiffiehellmanparameters.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qsslellipticcurve.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qsslerror.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qsslkey.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qsslpresharedkeyauthenticator.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qsslsocket.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qtcpserver.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qudpsocket.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qtnetworkversion.h \
+		../../../Qt/5.12.6/clang_64/lib/QtTest.framework/Headers/QTest \
+		../../../Qt/5.12.6/clang_64/lib/QtTest.framework/Headers/qtest.h \
+		../bloody_gui/cards.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o gamethread.o ../bloody_gui/gamethread.cpp
+
+main.o: ../bloody_gui/main.cpp ../../../Qt/5.12.6/clang_64/lib/QtWidgets.framework/Headers/QApplication \
+		../../../Qt/5.12.6/clang_64/lib/QtWidgets.framework/Headers/qapplication.h \
+		../bloody_gui/myserver.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/QTcpServer \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qtcpserver.h \
+		../bloody_gui/mythread.h \
+		../../../Qt/5.12.6/clang_64/lib/QtCore.framework/Headers/QThread \
+		../../../Qt/5.12.6/clang_64/lib/QtCore.framework/Headers/qthread.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/QTcpSocket \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qtcpsocket.h \
+		../../../Qt/5.12.6/clang_64/lib/QtCore.framework/Headers/QDebug \
+		../../../Qt/5.12.6/clang_64/lib/QtCore.framework/Headers/qdebug.h \
+		../bloody_gui/mainwindow.h \
+		../../../Qt/5.12.6/clang_64/lib/QtWidgets.framework/Headers/QMainWindow \
+		../../../Qt/5.12.6/clang_64/lib/QtWidgets.framework/Headers/qmainwindow.h \
+		../../../Qt/5.12.6/clang_64/lib/QtCore.framework/Headers/QVector \
+		../../../Qt/5.12.6/clang_64/lib/QtCore.framework/Headers/qvector.h \
+		../../../Qt/5.12.6/clang_64/lib/QtWidgets.framework/Headers/QLabel \
+		../../../Qt/5.12.6/clang_64/lib/QtWidgets.framework/Headers/qlabel.h \
+		../../../Qt/5.12.6/clang_64/lib/QtWidgets.framework/Headers/QBoxLayout \
+		../../../Qt/5.12.6/clang_64/lib/QtWidgets.framework/Headers/qboxlayout.h \
+		../../../Qt/5.12.6/clang_64/lib/QtWidgets.framework/Headers/QGridLayout \
+		../../../Qt/5.12.6/clang_64/lib/QtWidgets.framework/Headers/qgridlayout.h \
+		../../../Qt/5.12.6/clang_64/lib/QtWidgets.framework/Headers/QPushButton \
+		../../../Qt/5.12.6/clang_64/lib/QtWidgets.framework/Headers/qpushbutton.h \
+		../../../Qt/5.12.6/clang_64/lib/QtWidgets.framework/Headers/QLineEdit \
+		../../../Qt/5.12.6/clang_64/lib/QtWidgets.framework/Headers/qlineedit.h \
+		../../../Qt/5.12.6/clang_64/lib/QtGui.framework/Headers/QPixmap \
+		../../../Qt/5.12.6/clang_64/lib/QtGui.framework/Headers/qpixmap.h \
+		../../../Qt/5.12.6/clang_64/lib/QtGui.framework/Headers/QTransform \
+		../../../Qt/5.12.6/clang_64/lib/QtGui.framework/Headers/qtransform.h \
+		../../../Qt/5.12.6/clang_64/lib/QtCore.framework/Headers/QTimer \
+		../../../Qt/5.12.6/clang_64/lib/QtCore.framework/Headers/qtimer.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/QtNetwork \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qtnetworkglobal.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qabstractnetworkcache.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qabstractsocket.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qauthenticator.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qdnslookup.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qdtls.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qhostaddress.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qhostinfo.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qhstspolicy.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qhttpmultipart.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qlocalserver.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qlocalsocket.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qnetworkaccessmanager.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qnetworkconfigmanager.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qnetworkconfiguration.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qnetworkcookie.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qnetworkcookiejar.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qnetworkdatagram.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qnetworkdiskcache.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qnetworkinterface.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qnetworkproxy.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qnetworkreply.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qnetworkrequest.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qnetworksession.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qpassworddigestor.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qsctpserver.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qsctpsocket.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qssl.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qsslcertificate.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qsslcertificateextension.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qsslcipher.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qsslconfiguration.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qssldiffiehellmanparameters.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qsslellipticcurve.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qsslerror.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qsslkey.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qsslpresharedkeyauthenticator.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qsslsocket.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qudpsocket.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qtnetworkversion.h \
+		../../../Qt/5.12.6/clang_64/lib/QtTest.framework/Headers/QTest \
+		../../../Qt/5.12.6/clang_64/lib/QtTest.framework/Headers/qtest.h \
+		../bloody_gui/cards.h \
+		../bloody_gui/gamethread.h \
+		../../../Qt/5.12.6/clang_64/lib/QtCore.framework/Headers/QObject \
+		../../../Qt/5.12.6/clang_64/lib/QtCore.framework/Headers/qobject.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o ../bloody_gui/main.cpp
 
 mainwindow.o: ../bloody_gui/mainwindow.cpp ../bloody_gui/mainwindow.h \
@@ -896,14 +1350,231 @@ mainwindow.o: ../bloody_gui/mainwindow.cpp ../bloody_gui/mainwindow.h \
 		../../../Qt/5.12.6/clang_64/lib/QtGui.framework/Headers/qtransform.h \
 		../../../Qt/5.12.6/clang_64/lib/QtCore.framework/Headers/QTimer \
 		../../../Qt/5.12.6/clang_64/lib/QtCore.framework/Headers/qtimer.h \
-		ui_mainwindow.h
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/QtNetwork \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qtnetworkglobal.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qabstractnetworkcache.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qabstractsocket.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qauthenticator.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qdnslookup.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qdtls.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qhostaddress.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qhostinfo.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qhstspolicy.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qhttpmultipart.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qlocalserver.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qlocalsocket.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qnetworkaccessmanager.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qnetworkconfigmanager.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qnetworkconfiguration.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qnetworkcookie.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qnetworkcookiejar.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qnetworkdatagram.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qnetworkdiskcache.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qnetworkinterface.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qnetworkproxy.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qnetworkreply.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qnetworkrequest.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qnetworksession.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qpassworddigestor.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qsctpserver.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qsctpsocket.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qssl.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qsslcertificate.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qsslcertificateextension.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qsslcipher.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qsslconfiguration.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qssldiffiehellmanparameters.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qsslellipticcurve.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qsslerror.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qsslkey.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qsslpresharedkeyauthenticator.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qsslsocket.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qtcpserver.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qtcpsocket.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qudpsocket.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qtnetworkversion.h \
+		../../../Qt/5.12.6/clang_64/lib/QtTest.framework/Headers/QTest \
+		../../../Qt/5.12.6/clang_64/lib/QtTest.framework/Headers/qtest.h \
+		../bloody_gui/cards.h \
+		ui_mainwindow.h \
+		../bloody_gui/sockop.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mainwindow.o ../bloody_gui/mainwindow.cpp
+
+cards.o: ../bloody_gui/cards.cpp ../bloody_gui/cards.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o cards.o ../bloody_gui/cards.cpp
+
+myserver.o: ../bloody_gui/myserver.cpp ../bloody_gui/myserver.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/QTcpServer \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qtcpserver.h \
+		../bloody_gui/mythread.h \
+		../../../Qt/5.12.6/clang_64/lib/QtCore.framework/Headers/QThread \
+		../../../Qt/5.12.6/clang_64/lib/QtCore.framework/Headers/qthread.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/QTcpSocket \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qtcpsocket.h \
+		../../../Qt/5.12.6/clang_64/lib/QtCore.framework/Headers/QDebug \
+		../../../Qt/5.12.6/clang_64/lib/QtCore.framework/Headers/qdebug.h \
+		../bloody_gui/mainwindow.h \
+		../../../Qt/5.12.6/clang_64/lib/QtWidgets.framework/Headers/QMainWindow \
+		../../../Qt/5.12.6/clang_64/lib/QtWidgets.framework/Headers/qmainwindow.h \
+		../../../Qt/5.12.6/clang_64/lib/QtCore.framework/Headers/QVector \
+		../../../Qt/5.12.6/clang_64/lib/QtCore.framework/Headers/qvector.h \
+		../../../Qt/5.12.6/clang_64/lib/QtWidgets.framework/Headers/QLabel \
+		../../../Qt/5.12.6/clang_64/lib/QtWidgets.framework/Headers/qlabel.h \
+		../../../Qt/5.12.6/clang_64/lib/QtWidgets.framework/Headers/QBoxLayout \
+		../../../Qt/5.12.6/clang_64/lib/QtWidgets.framework/Headers/qboxlayout.h \
+		../../../Qt/5.12.6/clang_64/lib/QtWidgets.framework/Headers/QGridLayout \
+		../../../Qt/5.12.6/clang_64/lib/QtWidgets.framework/Headers/qgridlayout.h \
+		../../../Qt/5.12.6/clang_64/lib/QtWidgets.framework/Headers/QPushButton \
+		../../../Qt/5.12.6/clang_64/lib/QtWidgets.framework/Headers/qpushbutton.h \
+		../../../Qt/5.12.6/clang_64/lib/QtWidgets.framework/Headers/QLineEdit \
+		../../../Qt/5.12.6/clang_64/lib/QtWidgets.framework/Headers/qlineedit.h \
+		../../../Qt/5.12.6/clang_64/lib/QtGui.framework/Headers/QPixmap \
+		../../../Qt/5.12.6/clang_64/lib/QtGui.framework/Headers/qpixmap.h \
+		../../../Qt/5.12.6/clang_64/lib/QtGui.framework/Headers/QTransform \
+		../../../Qt/5.12.6/clang_64/lib/QtGui.framework/Headers/qtransform.h \
+		../../../Qt/5.12.6/clang_64/lib/QtCore.framework/Headers/QTimer \
+		../../../Qt/5.12.6/clang_64/lib/QtCore.framework/Headers/qtimer.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/QtNetwork \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qtnetworkglobal.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qabstractnetworkcache.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qabstractsocket.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qauthenticator.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qdnslookup.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qdtls.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qhostaddress.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qhostinfo.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qhstspolicy.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qhttpmultipart.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qlocalserver.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qlocalsocket.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qnetworkaccessmanager.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qnetworkconfigmanager.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qnetworkconfiguration.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qnetworkcookie.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qnetworkcookiejar.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qnetworkdatagram.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qnetworkdiskcache.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qnetworkinterface.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qnetworkproxy.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qnetworkreply.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qnetworkrequest.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qnetworksession.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qpassworddigestor.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qsctpserver.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qsctpsocket.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qssl.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qsslcertificate.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qsslcertificateextension.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qsslcipher.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qsslconfiguration.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qssldiffiehellmanparameters.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qsslellipticcurve.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qsslerror.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qsslkey.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qsslpresharedkeyauthenticator.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qsslsocket.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qudpsocket.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qtnetworkversion.h \
+		../../../Qt/5.12.6/clang_64/lib/QtTest.framework/Headers/QTest \
+		../../../Qt/5.12.6/clang_64/lib/QtTest.framework/Headers/qtest.h \
+		../bloody_gui/cards.h \
+		../bloody_gui/gamethread.h \
+		../../../Qt/5.12.6/clang_64/lib/QtCore.framework/Headers/QObject \
+		../../../Qt/5.12.6/clang_64/lib/QtCore.framework/Headers/qobject.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o myserver.o ../bloody_gui/myserver.cpp
+
+mythread.o: ../bloody_gui/mythread.cpp ../bloody_gui/mythread.h \
+		../../../Qt/5.12.6/clang_64/lib/QtCore.framework/Headers/QThread \
+		../../../Qt/5.12.6/clang_64/lib/QtCore.framework/Headers/qthread.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/QTcpSocket \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qtcpsocket.h \
+		../../../Qt/5.12.6/clang_64/lib/QtCore.framework/Headers/QDebug \
+		../../../Qt/5.12.6/clang_64/lib/QtCore.framework/Headers/qdebug.h \
+		../bloody_gui/mainwindow.h \
+		../../../Qt/5.12.6/clang_64/lib/QtWidgets.framework/Headers/QMainWindow \
+		../../../Qt/5.12.6/clang_64/lib/QtWidgets.framework/Headers/qmainwindow.h \
+		../../../Qt/5.12.6/clang_64/lib/QtCore.framework/Headers/QVector \
+		../../../Qt/5.12.6/clang_64/lib/QtCore.framework/Headers/qvector.h \
+		../../../Qt/5.12.6/clang_64/lib/QtWidgets.framework/Headers/QLabel \
+		../../../Qt/5.12.6/clang_64/lib/QtWidgets.framework/Headers/qlabel.h \
+		../../../Qt/5.12.6/clang_64/lib/QtWidgets.framework/Headers/QBoxLayout \
+		../../../Qt/5.12.6/clang_64/lib/QtWidgets.framework/Headers/qboxlayout.h \
+		../../../Qt/5.12.6/clang_64/lib/QtWidgets.framework/Headers/QGridLayout \
+		../../../Qt/5.12.6/clang_64/lib/QtWidgets.framework/Headers/qgridlayout.h \
+		../../../Qt/5.12.6/clang_64/lib/QtWidgets.framework/Headers/QPushButton \
+		../../../Qt/5.12.6/clang_64/lib/QtWidgets.framework/Headers/qpushbutton.h \
+		../../../Qt/5.12.6/clang_64/lib/QtWidgets.framework/Headers/QLineEdit \
+		../../../Qt/5.12.6/clang_64/lib/QtWidgets.framework/Headers/qlineedit.h \
+		../../../Qt/5.12.6/clang_64/lib/QtGui.framework/Headers/QPixmap \
+		../../../Qt/5.12.6/clang_64/lib/QtGui.framework/Headers/qpixmap.h \
+		../../../Qt/5.12.6/clang_64/lib/QtGui.framework/Headers/QTransform \
+		../../../Qt/5.12.6/clang_64/lib/QtGui.framework/Headers/qtransform.h \
+		../../../Qt/5.12.6/clang_64/lib/QtCore.framework/Headers/QTimer \
+		../../../Qt/5.12.6/clang_64/lib/QtCore.framework/Headers/qtimer.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/QtNetwork \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qtnetworkglobal.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qabstractnetworkcache.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qabstractsocket.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qauthenticator.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qdnslookup.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qdtls.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qhostaddress.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qhostinfo.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qhstspolicy.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qhttpmultipart.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qlocalserver.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qlocalsocket.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qnetworkaccessmanager.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qnetworkconfigmanager.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qnetworkconfiguration.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qnetworkcookie.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qnetworkcookiejar.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qnetworkdatagram.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qnetworkdiskcache.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qnetworkinterface.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qnetworkproxy.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qnetworkreply.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qnetworkrequest.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qnetworksession.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qpassworddigestor.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qsctpserver.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qsctpsocket.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qssl.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qsslcertificate.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qsslcertificateextension.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qsslcipher.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qsslconfiguration.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qssldiffiehellmanparameters.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qsslellipticcurve.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qsslerror.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qsslkey.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qsslpresharedkeyauthenticator.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qsslsocket.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qtcpserver.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qudpsocket.h \
+		../../../Qt/5.12.6/clang_64/lib/QtNetwork.framework/Headers/qtnetworkversion.h \
+		../../../Qt/5.12.6/clang_64/lib/QtTest.framework/Headers/QTest \
+		../../../Qt/5.12.6/clang_64/lib/QtTest.framework/Headers/qtest.h \
+		../bloody_gui/cards.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mythread.o ../bloody_gui/mythread.cpp
+
+sockop.o: ../bloody_gui/sockop.cpp ../bloody_gui/sockop.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o sockop.o ../bloody_gui/sockop.cpp
 
 qrc_resources.o: qrc_resources.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o qrc_resources.o qrc_resources.cpp
 
+moc_gamethread.o: moc_gamethread.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_gamethread.o moc_gamethread.cpp
+
 moc_mainwindow.o: moc_mainwindow.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_mainwindow.o moc_mainwindow.cpp
+
+moc_myserver.o: moc_myserver.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_myserver.o moc_myserver.cpp
+
+moc_mythread.o: moc_mythread.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_mythread.o moc_mythread.cpp
 
 ####### Install
 
